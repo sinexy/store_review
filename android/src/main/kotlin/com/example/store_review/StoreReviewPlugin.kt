@@ -28,8 +28,12 @@ class StoreReviewPlugin: FlutterPlugin, MethodCallHandler {
     if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
     } else if(call.method == "openStoreReview"){
-      var storePackageName = call.argument("storePackageName")
-      var appPackageName = call.argument("appPackageName")
+      var storePackageName: String? = call.argument("storePackageName")
+      var appPackageName: String? = call.argument("appPackageName")
+      if(appPackageName == null) {
+        println("appPackageName不能为空")
+        return
+      }
       launchAppDetail(appPackageName,storePackageName)
 
     }else {
