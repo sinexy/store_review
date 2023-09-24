@@ -1,6 +1,7 @@
 package com.example.store_review
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
@@ -29,8 +30,8 @@ class StoreReviewPlugin: FlutterPlugin, MethodCallHandler {
     if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
     } else if(call.method == "openStoreReview"){
-      var storePackageName: String? = call.argument("storePackageName")
-      var appPackageName: String? = call.argument("appPackageName")
+      var storePackageName: String? = call.argument("storePackageName") as? String
+      var appPackageName: String? = call.argument("appPackageName") as? String
       if(appPackageName == null) {
         println("appPackageName不能为空")
         return
@@ -47,12 +48,14 @@ class StoreReviewPlugin: FlutterPlugin, MethodCallHandler {
     try {
       if (TextUtils.isEmpty(appPkg)) return
       val uri = Uri.parse("market://details?id=$appPkg")
+
       val intent = Intent(Intent.ACTION_VIEW, uri)
+      var context = getApplicationContext()
       if (!TextUtils.isEmpty(marketPkg)) {
         intent.setPackage(marketPkg)
       }
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      startActivity(intent)
+      context.startActivity(intent)
     } catch (e: Exception) {
       e.printStackTrace()
     }
