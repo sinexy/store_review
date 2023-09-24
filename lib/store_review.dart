@@ -13,6 +13,6 @@ class StoreReview {
   }
 
   Future<void> openStoreReview({String? appPackageName,String? storePackageName}) {
-    return StoreReviewPlatform.instance.openStoreReview(storePackageName: storePackageName);
+    return StoreReviewPlatform.instance.openStoreReview(appPackageName:appPackageName,storePackageName: storePackageName);
   }
 }
