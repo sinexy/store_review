@@ -52,7 +52,6 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
     if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
     } else if(call.method == "openStoreReview"){
-      var storePackageName: String? = call.argument("storePackageName")
       var appPackageName: String? = call.argument("appPackageName")
 
       if(appPackageName == null) {
@@ -61,7 +60,7 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
         return
       }
       try {
-        launchAppDetail(appPackageName,storePackageName)
+        launchAppDetail(appPackageName)
       }catch (e: Exception){
         result.error(e.message)
       }
@@ -72,14 +71,10 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
   }
 
 
-  fun launchAppDetail(appPkg: String, marketPkg: String?) {
+  fun launchAppDetail(appPkg: String) {
     if (TextUtils.isEmpty(appPkg)) return
     val uri = Uri.parse("market://details?id=$appPkg")
     val intent = Intent(Intent.ACTION_VIEW, uri)
-
-    if (!TextUtils.isEmpty(marketPkg)) {
-      intent.setPackage(marketPkg)
-    }
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     activity.startActivity(intent)
 

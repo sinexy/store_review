@@ -18,11 +18,10 @@ class MethodChannelStoreReview extends StoreReviewPlatform {
 
   @override
   Future<String?> openStoreReview(
-      {String? appPackageName, String? storePackageName}) async {
+      {String? appPackageName}) async {
     // TODO: implement openStoreReview
     final error = await methodChannel.invokeMethod<String>('openStoreReview', {
       'appPackageName': appPackageName,
-      'storePackageName': storePackageName
     });
     return error;
   }
