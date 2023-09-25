@@ -47,6 +47,7 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
     channel.setMethodCallHandler(this)
   }
 
+
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -56,9 +57,14 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
 
       if(appPackageName == null) {
         println("appPackageName 不能为空")
+        result.error("appPackageName 不能为空")
         return
       }
-      launchAppDetail(appPackageName,storePackageName)
+      try {
+        launchAppDetail(appPackageName,storePackageName)
+      }catch (e: Exception){
+        result.error(e.message)
+      }
 
     }else {
       result.notImplemented()
@@ -67,20 +73,16 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
 
 
   fun launchAppDetail(appPkg: String, marketPkg: String?) {
+    if (TextUtils.isEmpty(appPkg)) return
+    val uri = Uri.parse("market://details?id=$appPkg")
+    val intent = Intent(Intent.ACTION_VIEW, uri)
 
-    try {
-      if (TextUtils.isEmpty(appPkg)) return
-      val uri = Uri.parse("market://details?id=$appPkg")
-      val intent = Intent(Intent.ACTION_VIEW, uri)
-
-      if (!TextUtils.isEmpty(marketPkg)) {
-        intent.setPackage(marketPkg)
-      }
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      activity.startActivity(intent)
-    } catch (e: Exception) {
-      e.printStackTrace()
+    if (!TextUtils.isEmpty(marketPkg)) {
+      intent.setPackage(marketPkg)
     }
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    activity.startActivity(intent)
+
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
