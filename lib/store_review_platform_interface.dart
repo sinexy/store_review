@@ -23,7 +23,7 @@ abstract class StoreReviewPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> openStoreReview({String? appPackageName,String? storePackageName}) async {
+  Future<String?> openStoreReview({String? appPackageName,String? storePackageName}) async {
     throw UnimplementedError('openStoreReview() has not been implemented.');
   }
 

@@ -17,12 +17,13 @@ class MethodChannelStoreReview extends StoreReviewPlatform {
   }
 
   @override
-  Future<void> openStoreReview(
+  Future<String?> openStoreReview(
       {String? appPackageName, String? storePackageName}) async {
     // TODO: implement openStoreReview
-    await methodChannel.invokeMethod<String>('openStoreReview', {
+    final error = await methodChannel.invokeMethod<String>('openStoreReview', {
       'appPackageName': appPackageName,
       'storePackageName': storePackageName
     });
+    return error;
   }
 }

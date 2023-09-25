@@ -12,7 +12,7 @@ class StoreReview {
     return StoreReviewPlatform.instance.getPlatformVersion();
   }
 
-  Future<void> openStoreReview({String? appPackageName,String? storePackageName}) {
+  Future<String?> openStoreReview({String? appPackageName,String? storePackageName}) {
     return StoreReviewPlatform.instance.openStoreReview(appPackageName:appPackageName,storePackageName: storePackageName);
   }
 }
