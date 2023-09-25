@@ -55,31 +55,23 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
       var appPackageName: String? = call.argument("appPackageName")
 
       if(appPackageName == null) {
-        println("appPackageName 不能为空")
-        result.error("appPackageName 不能为空")
+        result.error("UNAVAILABLE", "appPackageName 不能为空", null)
         return
       }
       try {
-        launchAppDetail(appPackageName)
+        val uri = Uri.parse("market://details?id=$appPackageName")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        activity.startActivity(intent)
       }catch (e: Exception){
-        result.error(e.message)
+        val msg = e.message
+        result.error("UNAVAILABLE", "$msg", null)
       }
 
     }else {
       result.notImplemented()
     }
   }
-
-
-  fun launchAppDetail(appPkg: String) {
-    if (TextUtils.isEmpty(appPkg)) return
-    val uri = Uri.parse("market://details?id=$appPkg")
-    val intent = Intent(Intent.ACTION_VIEW, uri)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    activity.startActivity(intent)
-
-  }
-
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
   }
