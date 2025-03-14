@@ -38,7 +38,12 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
   }
 
   override fun onDetachedFromActivity() {
-    TODO("Not yet implemented")
+    try {
+      channel.setMethodCallHandler(null)
+    }catch (Exception e){
+
+    }
+    channel = null;
   }
 
 
