@@ -31,7 +31,11 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
-    TODO("Not yet implemented")
+    try {
+      channel.setMethodCallHandler(null)
+    }catch (Exception e){
+
+    }
   }
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
     TODO("Not yet implemented")
@@ -43,7 +47,6 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
     }catch (Exception e){
 
     }
-    channel = null;
   }
 
 
