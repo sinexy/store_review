@@ -31,22 +31,22 @@ class StoreReviewPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
-    try {
-      channel.setMethodCallHandler(null)
-    }catch (Exception e){
-
-    }
+//    try {
+//      channel.setMethodCallHandler(null)
+//    }catch (Exception e){
+//
+//    }
   }
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-    TODO("Not yet implemented")
+//    TODO("Not yet implemented")
   }
 
   override fun onDetachedFromActivity() {
-    try {
-      channel.setMethodCallHandler(null)
-    }catch (Exception e){
-
-    }
+//    try {
+//      channel.setMethodCallHandler(null)
+//    }catch (Exception e){
+//
+//    }
   }
 
 
